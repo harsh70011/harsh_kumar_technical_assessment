@@ -18,9 +18,6 @@ export const FieldRow = ({ label, children }) => (
 export const BaseNode = ({ title, handles = [], children, className = '', style }) => {
   return (
     <div className={`node-shell ${className}`.trim()} style={style}>
-export const BaseNode = ({ title, handles = [], children }) => {
-  return (
-    <div className='node-shell'>
       {handles.map((handle) => (
         <Handle
           key={handle.id}
