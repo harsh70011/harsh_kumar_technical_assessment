@@ -56,39 +56,45 @@ export const PipelineUI = () => {
   } = useStore(selector, shallow);
 
   const getInitNodeData = (nodeID, type) => {
-    let nodeData = { id: nodeID, nodeType: `${type}` };
-    return nodeData;
-  }
+    return { id: nodeID, nodeType: `${type}` };
+  };
 
   const onDrop = useCallback(
     (event) => {
       event.preventDefault();
 
-      const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
-      if (event?.dataTransfer?.getData('application/reactflow')) {
-        const appData = JSON.parse(event.dataTransfer.getData('application/reactflow'));
-        const type = appData?.nodeType;
-
-        // check if the dropped element is valid
-        if (typeof type === 'undefined' || !type) {
-          return;
-        }
-
-        const position = reactFlowInstance.project({
-          x: event.clientX - reactFlowBounds.left,
-          y: event.clientY - reactFlowBounds.top,
-        });
-
-        const nodeID = getNodeID(type);
-        const newNode = {
-          id: nodeID,
-          type,
-          position,
-          data: getInitNodeData(nodeID, type),
-        };
-
-        addNode(newNode);
+      if (!reactFlowInstance || !reactFlowWrapper.current) {
+        return;
       }
+
+      const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
+      const transferData = event?.dataTransfer?.getData('application/reactflow');
+
+      if (!transferData) {
+        return;
+      }
+
+      const appData = JSON.parse(transferData);
+      const type = appData?.nodeType;
+
+      if (!type) {
+        return;
+      }
+
+      const position = reactFlowInstance.project({
+        x: event.clientX - reactFlowBounds.left,
+        y: event.clientY - reactFlowBounds.top,
+      });
+
+      const nodeID = getNodeID(type);
+      const newNode = {
+        id: nodeID,
+        type,
+        position,
+        data: getInitNodeData(nodeID, type),
+      };
+
+      addNode(newNode);
     },
     [reactFlowInstance, getNodeID, addNode]
   );
@@ -99,8 +105,8 @@ export const PipelineUI = () => {
   }, []);
 
   return (
-    <>
-      <div ref={reactFlowWrapper} style={{ width: '100wv', height: '70vh' }}>
+    <section className='canvas-card'>
+      <div ref={reactFlowWrapper} className='canvas-wrap'>
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -114,12 +120,13 @@ export const PipelineUI = () => {
           proOptions={proOptions}
           snapGrid={[gridSize, gridSize]}
           connectionLineType='smoothstep'
+          fitView
         >
-          <Background color="#aaa" gap={gridSize} />
+          <Background color='#cad6f6' gap={gridSize} />
           <Controls />
-          <MiniMap />
+          <MiniMap pannable zoomable />
         </ReactFlow>
       </div>
-    </>
-  )
-}
+    </section>
+  );
+};

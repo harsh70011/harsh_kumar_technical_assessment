@@ -11,7 +11,7 @@ export const MergeNode = ({ id }) => {
         { type: 'source', position: Position.Right, id: `${id}-merged` },
       ]}
     >
-      <span>Combines two streams into one output.</span>
+      <span className='node-note'>Combines two streams into one output.</span>
     </BaseNode>
   );
 };
