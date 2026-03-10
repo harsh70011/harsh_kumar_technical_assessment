@@ -5,6 +5,9 @@ import { BaseNode, FieldRow } from './baseNode';
 const variablePattern = /{{\s*([A-Za-z_$][A-Za-z0-9_$]*)\s*}}/g;
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+import { useState } from 'react';
+import { Position } from 'reactflow';
+import { BaseNode, FieldRow } from './baseNode';
 
 export const TextNode = ({ id, data }) => {
   const [currText, setCurrText] = useState(data?.text || '{{input}}');
@@ -62,6 +65,17 @@ export const TextNode = ({ id, data }) => {
       {variables.length > 0 && (
         <span className='node-note'>Variables: {variables.map((v) => `{{${v}}}`).join(', ')}</span>
       )}
+  return (
+    <BaseNode
+      title='Text'
+      handles={[
+        { type: 'target', position: Position.Left, id: `${id}-input` },
+        { type: 'source', position: Position.Right, id: `${id}-output` },
+      ]}
+    >
+      <FieldRow label='Value'>
+        <input type='text' value={currText} onChange={(e) => setCurrText(e.target.value)} />
+      </FieldRow>
     </BaseNode>
   );
 };
