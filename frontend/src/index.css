@@ -235,3 +235,8 @@ body {
 .text-node-dynamic .node-field {
   align-items: flex-start;
 }
+
+.node-note {
+  color: #5a698f;
+  font-size: 12px;
+}
