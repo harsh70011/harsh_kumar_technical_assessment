@@ -15,6 +15,9 @@ export const FieldRow = ({ label, children }) => (
   </label>
 );
 
+export const BaseNode = ({ title, handles = [], children, className = '', style }) => {
+  return (
+    <div className={`node-shell ${className}`.trim()} style={style}>
 export const BaseNode = ({ title, handles = [], children }) => {
   return (
     <div className='node-shell'>

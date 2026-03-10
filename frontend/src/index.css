@@ -212,3 +212,31 @@ body {
   color: #5a698f;
   font-size: 12px;
 }
+
+.node-textarea {
+  width: 100%;
+  border: 1px solid #cfd9f2;
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 12px;
+  font-family: inherit;
+  line-height: 1.4;
+  resize: vertical;
+  min-height: 52px;
+  outline: none;
+  background: #fff;
+}
+
+.node-textarea:focus {
+  border-color: #7f9bff;
+  box-shadow: 0 0 0 2px rgba(127, 155, 255, 0.2);
+}
+
+.text-node-dynamic .node-field {
+  align-items: flex-start;
+}
+
+.node-note {
+  color: #5a698f;
+  font-size: 12px;
+}
