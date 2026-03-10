@@ -1,17 +1,28 @@
-// toolbar.js
-
 import { DraggableNode } from './draggableNode';
 
-export const PipelineToolbar = () => {
+const nodeDefinitions = [
+  { type: 'customInput', label: 'Input' },
+  { type: 'llm', label: 'LLM' },
+  { type: 'customOutput', label: 'Output' },
+  { type: 'text', label: 'Text' },
+  { type: 'api', label: 'API' },
+  { type: 'filter', label: 'Filter' },
+  { type: 'math', label: 'Math' },
+  { type: 'delay', label: 'Delay' },
+  { type: 'merge', label: 'Merge' },
+];
 
-    return (
-        <div style={{ padding: '10px' }}>
-            <div style={{ marginTop: '20px', display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                <DraggableNode type='customInput' label='Input' />
-                <DraggableNode type='llm' label='LLM' />
-                <DraggableNode type='customOutput' label='Output' />
-                <DraggableNode type='text' label='Text' />
-            </div>
-        </div>
-    );
+export const PipelineToolbar = () => {
+  return (
+    <section className='toolbar-card'>
+      <h2 className='toolbar-title'>Node Library</h2>
+      <p className='toolbar-help'>Drag any block into the canvas to create a new node.</p>
+
+      <div className='toolbar-grid'>
+        {nodeDefinitions.map((node) => (
+          <DraggableNode key={node.type} type={node.type} label={node.label} />
+        ))}
+      </div>
+    </section>
+  );
 };

@@ -2,19 +2,25 @@ import { useState } from 'react';
 import { Position } from 'reactflow';
 import { BaseNode, FieldRow } from './baseNode';
 
-export const TextNode = ({ id, data }) => {
-  const [currText, setCurrText] = useState(data?.text || '{{input}}');
+export const DelayNode = ({ id }) => {
+  const [seconds, setSeconds] = useState(1);
 
   return (
     <BaseNode
-      title='Text'
+      title='Delay'
       handles={[
         { type: 'target', position: Position.Left, id: `${id}-input` },
         { type: 'source', position: Position.Right, id: `${id}-output` },
       ]}
     >
-      <FieldRow label='Value'>
-        <input type='text' value={currText} onChange={(e) => setCurrText(e.target.value)} />
+      <FieldRow label='Secs'>
+        <input
+          type='number'
+          min='0'
+          value={seconds}
+          onChange={(e) => setSeconds(e.target.value)}
+          style={{ width: '70px' }}
+        />
       </FieldRow>
     </BaseNode>
   );
